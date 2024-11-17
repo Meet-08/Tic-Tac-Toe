@@ -14,11 +14,11 @@ const App = () => {
   const handleClick = (index) => {
     board[index] = turn === "" ? "X" : turn;
     setTurn(turn === "O" ? "X" : "O");
-    checkWinner();
-    checkDraw();
+    if(!checkWinner()) checkDraw();
   };
 
   const checkWinner = () => {
+    let flag = false;
     AllWinPatterns.forEach((pattern) => {
       const i1 = pattern[0];
       const i2 = pattern[1];
@@ -31,9 +31,11 @@ const App = () => {
         if (board[i1] == "O") setY(y + 1);
         setTurn(board[i1]);
         setWin(true);
+        flag = true;
         return true;
       }
     });
+    return flag;
   };
 
   const checkDraw = () => {
